@@ -1,9 +1,9 @@
-from app.init import app
+from chatapp.init import app
 
-from app.user import user_bp
-from app.auth import auth_bp
-from app.group import group_bp
-from app.message import message_bp
+from chatapp.user import user_bp
+from chatapp.auth import auth_bp
+from chatapp.group import group_bp
+from chatapp.message import message_bp
 
 # Register routes
 app.register_blueprint(auth_bp, url_prefix='/api')
