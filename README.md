@@ -1,6 +1,6 @@
 # Flask Group Chat Application with SQLite and Swagger Documentation
 ------------------------------------------------------------------
-Online Deployed: [https://ravisaroj.pythonanywhere.com/api/docs/#/](ravisaroj.pythonanywhere.com/api/docs/#/)
+Online Deployed: [https://ravisaroj.pythonanywhere.com/api/docs/#/](https://ravisaroj.pythonanywhere.com/api/docs/#/)
 # group-chat-app
 A simple application which provides web services to facilitate group chat and manage data.
 - Admin APIs (only admin can add users)
