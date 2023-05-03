@@ -96,7 +96,12 @@
           "400": {
             "description": "Invalid input"
           }
-        }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       },
       "post": {
         "summary": "Create a new user",
@@ -130,7 +135,12 @@
           "400": {
             "description": "Invalid input"
           }
-        }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       }
     },
     "/users/{user_id}": {
@@ -165,7 +175,12 @@
             "description": "Invalid ID supplied"
           }
         },
-        "summary": "Returns information about a specific user"
+        "summary": "Returns information about a specific user",
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -206,7 +221,12 @@
             "description": "Invalid ID supplied"
           }
         },
-        "summary": "Updates information about a specific user"
+        "summary": "Updates information about a specific user",
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -236,7 +256,12 @@
             "description": "Invalid ID supplied"
           }
         },
-        "summary": "Deletes a specific user"
+        "summary": "Deletes a specific user",
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       }
     },
     "/groups": {
@@ -258,7 +283,6 @@
             "collectionFormat": "single"
           }
         ],
-
         "responses": {
           "200": {
             "description": "Group list fetched",
@@ -272,7 +296,12 @@
           "400": {
             "description": "Invalid input"
           }
-        }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -280,7 +309,7 @@
         ],
         "consumes": [
           "application/json"
-        ], 
+        ],
         "produces": [
           "application/json"
         ],
@@ -301,18 +330,12 @@
           "400": {
             "description": "Invalid input"
           }
-        },"security": [
+        },
+        "security": [
           {
             "api_key": []
-          },
-          {
-            "auth": [
-              "write:admin",
-              "read:admin"
-            ]
           }
         ],
-
         "summary": "Creates a new group"
       }
     },
@@ -321,33 +344,155 @@
         "tags": [
           "Groups"
         ],
-        "summary": "Returns information about a specific group"
-      },
-      "put": {
-        "tags": [
-          "Groups"
+        "produces": [
+          "application/json"
         ],
-        "summary": "Updates information about a specific group"
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "description": "group id that need to be considered for search",
+            "required": false,
+            "type": "int64",
+            "collectionFormat": "single"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group fetched",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Group"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "summary": "Returns information about a specific group",
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Groups"
         ],
-        "summary": "Deletes a specific group"
+        "summary": "Deletes a specific group",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "description": "group id that need to be considered to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "collectionFormat": "single"
+          }
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group deleted"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
       }
     },
-    "/groups/{group_id}/users": {
-      "get": {
-        "tags": [
-          "Groups"
-        ],
-        "summary": "Returns a list of all users in a specific group"
-      },
+    "/groups/{group_id}/members": {
       "post": {
         "tags": [
           "Groups"
         ],
-        "summary": "Adds a user to a specific group"
+        "summary": "Adds a user to a specific group",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "description": "group id that need to be considered to add user",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "collectionFormat": "single"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GroupMember"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "user added"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/groups/{group_id}/messages/{message_id}/like": {
+      "post": {
+        "tags": [
+          "Messages"
+        ], "summary": "like s messages in a specific group",
+        "produces": [
+          "application/json"
+        ], "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "description": "group id that need to be considered to like messages",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "collectionFormat": "single"
+          },{
+            "name": "message_id",
+            "in": "path",
+            "description": "message_id  that need to be considered to like message",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "collectionFormat": "single"
+          }
+        ],"responses": {
+          "200": {
+            "description": "message liked"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },"security": [
+          {
+            "api_key": []
+          }
+        ]
       }
     },
     "/groups/{group_id}/messages": {
@@ -355,17 +500,90 @@
         "tags": [
           "Messages"
         ],
-        "summary": "Returns a list of all messages in a specific group"
+        "summary": "Returns a list of all messages in a specific group",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "description": "group id that need to be considered to fetch messages",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "collectionFormat": "single"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user added",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Message"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "Messages"
         ],
-        "summary": "Adds a new message to a specific group"
+        "summary": "Adds a new message to a specific group",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "description": "group id that need to be considered to send messages",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "collectionFormat": "single"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MessageText"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "message sent"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       }
     }
   },
-
   "securityDefinitions": {
     "api_key": {
       "type": "apiKey",
@@ -426,6 +644,14 @@
         }
       }
     },
+    "GroupMember": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        }
+      }
+    },
     "CreateGroup": {
       "type": "object",
       "properties": {
@@ -434,7 +660,6 @@
         }
       }
     },
-
     "Message": {
       "type": "object",
       "properties": {
@@ -453,6 +678,20 @@
         "created_at": {
           "type": "string",
           "format": "date-time"
+        },
+        "likes": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "MessageText": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
         }
       }
     }

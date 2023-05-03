@@ -21,18 +21,28 @@ def login():
     else:
         return jsonify({'message': 'Invalid username or password'}), 401
     
+@auth_bp.route('/logout', methods=['POST'])
+def logout():
+    # Remove token from client-side storage (e.g., cookies or local storage)
+    response = jsonify({'message': 'User logged out successfully'})
+    response.delete_cookie('Authorization')
+    return response, 200
+    
 
 def token_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
         token = None
+         
+        if not 'Authorization' in request.headers:
+            return jsonify({'message': 'no Authorization header found'}), 401
+        words = request.headers['Authorization'].split(" ")
+        if words[0]!="Bearer":
+            return jsonify({'message': 'Unknown Authorization method other than Bearer'}), 401
 
-        if 'Authorization' in request.headers:
-            token = request.headers['Authorization']
-
-        if not token:
+        if len(words)<2 and not words[1]:
             return jsonify({'message': 'Token is missing'}), 401
-
+        token= words[1]
         try:
             print(token)
             data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
@@ -40,6 +50,21 @@ def token_required(func):
             current_user = User.query.get(data['user_id'])
         except:
             return jsonify({'message': 'Token is invalid'}), 401
+
+        return func(current_user, *args, **kwargs)
+
+    return decorated
+
+def admin_required(func):
+    @wraps(func)
+    def decorated(current_user,*args, **kwargs):
+        try:
+            if not current_user:
+                return jsonify({'message': 'login user is not exist'}), 404
+            if not current_user.is_admin:
+                return jsonify({'message': 'user is not admin'}), 401
+        except:
+            return jsonify({'message': 'unknown error'}), 500
 
         return func(current_user, *args, **kwargs)
 

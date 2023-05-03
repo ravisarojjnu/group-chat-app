@@ -2,11 +2,13 @@ from flask import Blueprint, jsonify, request
 from models import  db,User
 from init import db
 from werkzeug.security import generate_password_hash
-
+from auth import token_required,admin_required
 user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/users', methods=['POST'])
-def create_user():
+@token_required
+#@admin_required
+def create_user(current_user):
     data = request.get_json()
     user = User(username=data['username'], password=generate_password_hash(data['password']), is_admin=data.get('is_admin', False))
     db.session.add(user)
@@ -14,7 +16,9 @@ def create_user():
     return jsonify({'message': 'User created successfully'}), 201
 
 @user_bp.route('/users/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
+@token_required
+@admin_required
+def update_user(current_user,user_id):
     data = request.get_json()
     user = User.query.get(user_id)
     if not user:
@@ -30,13 +34,15 @@ def update_user(user_id):
 
 
 @user_bp.route('/users', methods=['GET'])
-def get_users():
+@token_required
+def get_users(current_user):
     users = User.query.all()
     return jsonify([{'id': user.id, 'username': user.username, 'is_admin': user.is_admin} for user in users]), 200
 
 
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
-def get_user(user_id):
+@token_required
+def get_user(current_user,user_id):
     try:
         user = User.query.get(user_id)
         if not user:
@@ -46,7 +52,9 @@ def get_user(user_id):
         return jsonify({'message': 'Invalid ID supplied'}), 400
 
 @user_bp.route('/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
+@token_required
+@admin_required
+def delete_user(current_user,user_id):
     user = User.query.get(user_id)
     if not user:
         return jsonify({'message': 'User not found'}), 404
