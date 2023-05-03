@@ -53,7 +53,31 @@ This is a Python Flask application that provides web services to facilitate grou
     -   `POST /groups/{group_id}/messages`: Send a message in a group
     -   `PUT /groups/{group_id}/messages/{message_id}/like`: Like a message in a group
 
-Note: Some of the endpoints are restricted to admin users only.
+### Test:
+Use test.py to test functionality of APIs that are working as expected or not.
+
+to run test case:
+- python test.py
+
+### Note: 
+Some of the endpoints are restricted to admin users only.
+
+
+
+## Here are some possible future enhancements for this application:
+- Implement real-time messaging using WebSockets for a more interactive and responsive chat experience.
+- Add user roles and permissions to control access to certain functionalities within the application.
+- Implement file sharing within groups to allow users to share documents and files with other group members.
+- Add the ability for users to create private groups that can only be joined by invitation.
+- Implement multi-factor authentication for improved security.
+- Add the ability for users to create polls within groups to gather opinions and make decisions as a group.
+- Implement message threading to make conversations within groups more organized and easier to follow.
+- Add support for multiple languages to make the application more accessible to users from different regions.
+- Implement search functionality to allow users to easily find messages, groups or other users within the application.
+- Integrate the application with third-party services like Google Drive or Dropbox to allow users to easily share files from these services within the application.
+- Add support for refresh tokens: Refresh tokens can be used to issue new access tokens without requiring the user to re-authenticate. This can provide a more seamless experience for the user while still maintaining a high level of security.
+- Use a centralized identity provider: Using a centralized identity provider like Okta or Auth0 can simplify authentication and improve security by providing a single source of truth for user identities and credentials.
+- Implement rate limiting: Implementing rate limiting can help prevent brute force attacks against the authentication system by limiting the number of attempts a user can make within a certain time period.
 
 ### License
 

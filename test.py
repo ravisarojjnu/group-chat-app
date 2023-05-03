@@ -14,7 +14,7 @@ class FlaskGroupChatTest(unittest.TestCase):
         headers = {'Content-Type': 'application/json', 'X-API-Key':self.admin_user_token}
         data = json.dumps({
             'username': 'normal_user1',
-            'password': 'normal_user1',
+            'password': 'normal_user11',
             'email': 'normal_user@example.com',
             'is_admin': False
         })
