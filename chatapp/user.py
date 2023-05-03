@@ -7,7 +7,7 @@ user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/users', methods=['POST'])
 @token_required
-#@admin_required
+@admin_required
 def create_user(current_user):
     data = request.get_json()
     user = User(username=data['username'], password=generate_password_hash(data['password']), is_admin=data.get('is_admin', False))
