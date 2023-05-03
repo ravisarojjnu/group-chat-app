@@ -25,7 +25,7 @@ def login():
 def logout():
     # Remove token from client-side storage (e.g., cookies or local storage)
     response = jsonify({'message': 'User logged out successfully'})
-    response.delete_cookie('Authorization')
+    response.delete_cookie('X-API-Key')
     return response, 200
     
 
@@ -34,15 +34,9 @@ def token_required(func):
     def decorated(*args, **kwargs):
         token = None
          
-        if not 'Authorization' in request.headers:
-            return jsonify({'message': 'no Authorization header found'}), 401
-        words = request.headers['Authorization'].split(" ")
-        if words[0]!="Bearer":
-            return jsonify({'message': 'Unknown Authorization method other than Bearer'}), 401
-
-        if len(words)<2 and not words[1]:
-            return jsonify({'message': 'Token is missing'}), 401
-        token= words[1]
+        if not 'X-API-Key' in request.headers:
+            return jsonify({'message': 'no X-API-Key header found'}), 401
+        token = request.headers['X-API-Key']
         try:
             print(token)
             data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])

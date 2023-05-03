@@ -587,8 +587,9 @@
   "securityDefinitions": {
     "api_key": {
       "type": "apiKey",
-      "name": "Authorization",
-      "in": "header"
+      "name": "X-API-Key",
+      "in": "header",
+      "valuec":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsImV4cCI6MTY4MzEzMjM1OH0.W8jUjO9qs1ulQqXgFlPqCMheW-WyzYjISB-Sz5F7lpQ"
     }
   },
   "definitions": {
