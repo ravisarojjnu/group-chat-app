@@ -1,12 +1,11 @@
-from init import app
-# Register routes
+from app.init import app
 
-from user import user_bp
-from auth import auth_bp
-from group import group_bp
-from message import message_bp
-from flask import Flask, send_from_directory
-import os
+from app.user import user_bp
+from app.auth import auth_bp
+from app.group import group_bp
+from app.message import message_bp
+
+# Register routes
 app.register_blueprint(auth_bp, url_prefix='/api')
 app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(group_bp, url_prefix='/api')

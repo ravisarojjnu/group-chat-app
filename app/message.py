@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from init import db
-from models import  Group, Message, User,MessageLike
-from auth import token_required
+from .init import db
+from .models import  Group, Message, User,MessageLike
+from .auth import token_required
 message_bp = Blueprint('message', __name__)
 
 # Send message to group

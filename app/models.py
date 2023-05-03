@@ -1,5 +1,5 @@
 
-from init import db,app
+from .init import db,app
 from werkzeug.security import generate_password_hash
 import datetime
 class User(db.Model):

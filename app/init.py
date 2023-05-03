@@ -21,6 +21,6 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 )
 @app.route("/api/swagger.json")
 def specs():
-    return send_from_directory(os.getcwd(), "swagger.json")
+    return send_from_directory(os.getcwd()+"/app", "swagger.json")
 # Register Swagger UI blueprint
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)

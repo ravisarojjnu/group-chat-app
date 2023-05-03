@@ -1,9 +1,4 @@
 flask==2.2.2
 flask-sqlalchemy==3.0.2
-Flask-JWT-Extended
-Flask-RESTful
-Jinja2
-SQLAlchemy
-itsdangerous
 pyjwt
 flask-swagger-ui

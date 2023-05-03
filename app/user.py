@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
-from models import  db,User
-from init import db
+from .models import  db,User
+from .init import db
 from werkzeug.security import generate_password_hash
-from auth import token_required,admin_required
+from .auth import token_required,admin_required
 user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/users', methods=['POST'])

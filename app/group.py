@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from models import db,Group, GroupMembership, User
-from auth import token_required
+from .models import db,Group, GroupMembership, User
+from .auth import token_required
 group_bp = Blueprint('group', __name__)
 
 # Create group
